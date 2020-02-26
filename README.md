@@ -1,37 +1,41 @@
-# js-daily-questions 每日 JS
+# js-daily-questions 之细水长流
 
-从基础到进阶，每天进步一点点！:muscle: :rocket: 仓库一天一更。
+从基础到进阶，每天进步一点点！:muscle: :rocket: 一天一更。
 
 答案在问题下方的折叠部分，点击即可展开。
 
 ---
 
-###### 1. 输出是什么？
+###### 3. 输出是什么？
 
 ```javascript
-function sayHi() {
-  console.log(name);
-  console.log(age);
-  var name = "Lydia";
-  let age = 21;
-}
+const shape = {
+  radius: 10,
+  diameter() {
+    return this.radius * 2;
+  },
+  perimeter: () => 2 * Math.PI * this.radius
+};
 
-sayHi();
+shape.diameter();
+shape.perimeter();
 ```
 
-- A: `Lydia` 和 `undefined`
-- B: `Lydia` 和 `ReferenceError`
-- C: `ReferenceError` 和 `21`
-- D: `undefined` 和 `ReferenceError`
+- A: `20` and `62.83185307179586`
+- B: `20` and `NaN`
+- C: `20` and `63`
+- D: `NaN` and `63`
 
 <details><summary><b>答案</b></summary>
 <p>
 
-#### 答案: D
+#### 答案: B
 
-在函数内部，我们首先通过 `var` 关键字声明了 `name` 变量。这意味着变量被提升了（内存空间在创建阶段就被设置好了），直到程序运行到定义变量位置之前默认值都是 `undefined`。因为当我们打印 `name` 变量时还没有执行到定义变量的位置，因此变量的值保持为 `undefined`。
+注意 `diameter` 的值是一个常规函数，但是 `perimeter` 的值是一个箭头函数。
 
-通过 `let` 和 `const` 关键字声明的变量也会提升，但是和 `var` 不同，它们不会被<i>初始化</i>。在我们声明（初始化）之前是不能访问它们的。这个行为被称之为暂时性死区。当我们试图在声明之前访问它们时，JavaScript 将会抛出一个 `ReferenceError` 错误。
+对于箭头函数，`this` 关键字指向的是它当前周围作用域（简单来说是包含箭头函数的常规函数，如果没有常规函数的话就是全局对象），这个行为和常规函数不同。这意味着当我们调用 `perimeter` 时，`this` 不是指向 `shape` 对象，而是它的周围作用域（在例子中是 `window`）。
+
+在 `window` 中没有 `radius` 这个属性，因此返回 `undefined`。
 
 </p>
 </details>
@@ -68,36 +72,32 @@ for (let i = 0; i < 3; i++) {
 
 ---
 
-###### 3. 输出是什么？
+###### 1. 输出是什么？
 
 ```javascript
-const shape = {
-  radius: 10,
-  diameter() {
-    return this.radius * 2;
-  },
-  perimeter: () => 2 * Math.PI * this.radius
-};
+function sayHi() {
+  console.log(name);
+  console.log(age);
+  var name = "Lydia";
+  let age = 21;
+}
 
-shape.diameter();
-shape.perimeter();
+sayHi();
 ```
 
-- A: `20` and `62.83185307179586`
-- B: `20` and `NaN`
-- C: `20` and `63`
-- D: `NaN` and `63`
+- A: `Lydia` 和 `undefined`
+- B: `Lydia` 和 `ReferenceError`
+- C: `ReferenceError` 和 `21`
+- D: `undefined` 和 `ReferenceError`
 
 <details><summary><b>答案</b></summary>
 <p>
 
-#### 答案: B
+#### 答案: D
 
-注意 `diameter` 的值是一个常规函数，但是 `perimeter` 的值是一个箭头函数。
+在函数内部，我们首先通过 `var` 关键字声明了 `name` 变量。这意味着变量被提升了（内存空间在创建阶段就被设置好了），直到程序运行到定义变量位置之前默认值都是 `undefined`。因为当我们打印 `name` 变量时还没有执行到定义变量的位置，因此变量的值保持为 `undefined`。
 
-对于箭头函数，`this` 关键字指向的是它当前周围作用域（简单来说是包含箭头函数的常规函数，如果没有常规函数的话就是全局对象），这个行为和常规函数不同。这意味着当我们调用 `perimeter` 时，`this` 不是指向 `shape` 对象，而是它的周围作用域（在例子中是 `window`）。
-
-在 `window` 中没有 `radius` 这个属性，因此返回 `undefined`。
+通过 `let` 和 `const` 关键字声明的变量也会提升，但是和 `var` 不同，它们不会被<i>初始化</i>。在我们声明（初始化）之前是不能访问它们的。这个行为被称之为暂时性死区。当我们试图在声明之前访问它们时，JavaScript 将会抛出一个 `ReferenceError` 错误。
 
 </p>
 </details>
